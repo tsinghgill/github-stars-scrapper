@@ -46,6 +46,8 @@ class Crawler:
                 
                 if email_match and "noreply" not in email_match.group(1):
                     return email_match.group(1)
+        else:
+            print(f"[!] Failed to fetch profile for {username} with status code {response.status_code}")
         return None
 
     def run(self):
