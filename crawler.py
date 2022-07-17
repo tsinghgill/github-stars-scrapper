@@ -12,7 +12,7 @@ class Crawler:
         self.stargazers = []
         self.emails = {}
     
-    def fetch_stargazers(self, page=1):
+    def fetch_stargazers(self, page=1, retries=3):
         url = f'https://github.com/{self.username}/{self.repository}/stargazers?page={page}'
         response = requests.get(url)
 
@@ -27,9 +27,13 @@ class Crawler:
 
             if stargazers:  # If stars were found, fetch the next page
                 self.fetch_stargazers(page + 1)
-        elif response.status_code == 429:  # Handle rate limiting
-            time.sleep(1)
-            self.fetch_stargazers(page)
+        elif response.status_code == 429 and retries > 0:  # Handle rate limiting with retries
+            time.sleep(2)  # Increase sleep time for retry
+            print(f"[!] Rate limit hit, retrying... {retries} attempts left")
+            self.fetch_stargazers(page, retries - 1)
+        else:
+            print(f"[!] Failed to fetch stargazers after {3 - retries} retries.")
+
     
     def fetch_email(self, username):
         url = f'https://github.com/{username}'
