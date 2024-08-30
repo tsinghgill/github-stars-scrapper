@@ -1,4 +1,4 @@
-## GitHub Stars Scrapper
+# GitHub Stars Scrapper
 
 **GitHub Stars Scrapper** is a powerful Python tool designed to help gather email addresses and usernames of individuals who have starred a GitHub repository. This tool leverages multithreading to efficiently scrape GitHub and retrieve data without requiring an API key. It’s an excellent resource for developers who want to connect with those interested in their projects.
 
